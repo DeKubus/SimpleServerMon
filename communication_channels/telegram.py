@@ -9,12 +9,16 @@ class TelegramChannel(CommunicationChannel):
             self.telegram_token = config["token"]
         else:
             raise ValueError("Invalid Telegram token value provided, aborting")
+        if "chat_id" in config and len(config["chat_id"]) > 3:
+            self.chat_id = config["chat_id"]
+        else:
+            raise ValueError("Invalid Telegram chat ID provided, aborting")
         super().__init__()
 
     def send_message(self, message) -> None:
         response = requests.post(
             f"https://api.telegram.org/bot{self.telegram_token}/sendMessage",
-            params={"chat_id": "305068973", "text": message},
+            params={"chat_id": self.chat_id, "text": message},
         )
         if response.status_code < 200 or response.status_code > 299:
             logging.error(
