@@ -34,9 +34,10 @@ class DiskspaceService(TimedService):
                 percent_usage = usage.used / usage.total * 100
                 if percent_usage >= self.threshold:
                     if partition.mountpoint not in self.was_exceeded:
-                        message = "Disk usage exceeds threshold of {thr}% for partition {part}: {used:.2f} GB / {total:.2f} GB ({per:.2f}% full)".format(
+                        message = "Disk usage exceeds threshold of {thr}% for partition {part} (device {dev}): {used:.2f} GB / {total:.2f} GB ({per:.2f}% full)".format(
                             thr=self.threshold,
                             part=partition.mountpoint,
+                            dev=partition.device,
                             used=usage.used / float(1 << 30),
                             total=usage.total / float(1 << 30),
                             per=percent_usage,
