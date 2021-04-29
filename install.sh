@@ -1,4 +1,9 @@
-python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
+# install python environment and dependencies
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+# setup systemd service
 cp simple_server_mon.template simple_server_mon.service
 working_dir=$(echo $PWD)
 echo $working_dir
