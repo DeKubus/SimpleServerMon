@@ -10,7 +10,7 @@ class ServerMonService:
         service_thread = threading.Thread(target=self.run_service)
         service_thread.start()
 
-    def run_service(self):
+    def run_service(self) -> None:
         logging.info("Instantiated {}".format(self._type()))
         while True:
             logging.debug("Running logic for service {}".format(self._type()))
@@ -18,7 +18,7 @@ class ServerMonService:
             if hasattr(self, "update_interval"):
                 sleep(self.update_interval)
 
-    def send_message(self, message):
+    def send_message(self, message) -> None:
         for channel in self.channels:
             channel.send_message(message)
 
@@ -28,7 +28,7 @@ class ServerMonService:
             "Logic for service {} was not implemented".format(self._type())
         )
 
-    def _type(self):
+    def _type(self) -> str:
         return self.__class__.__name__
 
 

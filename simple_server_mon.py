@@ -32,7 +32,7 @@ class SimpleServerMon:
         self.communication_channels = []
         self._parse_messaging_channels()
 
-    def _parse_messaging_channels(self):
+    def _parse_messaging_channels(self) -> None:
         for channel_definition in self.config["messaging_channels"]:
             key = next(iter(channel_definition.keys()))
             try:
@@ -88,11 +88,11 @@ class SimpleServerMon:
                         result.extend(self._flatten_keys(sub_item))
         return result
 
-    def _snake_to_camel(self, snake_string):
+    def _snake_to_camel(self, snake_string) -> str:
         components = snake_string.split("_")
         return "".join(x.capitalize() for x in components)
 
-    def run_daemons(self):
+    def run_daemons(self) -> None:
         for service_definition in self.config["services"]:
             key = next(iter(service_definition.keys()))
             try:

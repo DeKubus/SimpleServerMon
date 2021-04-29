@@ -22,7 +22,7 @@ class FreeMemoryService(TimedService):
         self.threshold_exceeded = False
         super().__init__(channels, config)
 
-    def do_service_logic(self):
+    def do_service_logic(self) -> None:
         memory_stats = virtual_memory()
         if memory_stats.percent >= self.threshold:
             if not self.threshold_exceeded:

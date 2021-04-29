@@ -25,7 +25,7 @@ class DiskspaceService(TimedService):
         self.was_exceeded = []
         super().__init__(channels, config)
 
-    def do_service_logic(self):
+    def do_service_logic(self) -> None:
         partitions = disk_partitions()
         too_full = []
         for partition in partitions:
