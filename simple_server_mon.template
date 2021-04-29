@@ -1,0 +1,14 @@
+[Unit]
+Description=A simple server monitoring script
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=script_home
+ExecStart=script_home/venv/bin/python simple_server_mon.py
+
+[Install]
+WantedBy=multi-user.target

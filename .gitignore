@@ -1,0 +1,8 @@
+*.pyc
+.env
+venv/
+.vscode
+config.json
+simple-server-mon.log
+simple_server_mon.service
+__pycache__
