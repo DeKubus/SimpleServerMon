@@ -4,17 +4,17 @@ import abc
 import logging
 
 
-class ServerMonService:
+class ServerMonSensor:
     def __init__(self, channels, config) -> None:
         self.channels = channels
-        service_thread = threading.Thread(target=self.run_service)
-        service_thread.start()
+        sensor_thread = threading.Thread(target=self.run_sensor)
+        sensor_thread.start()
 
-    def run_service(self) -> None:
+    def run_sensor(self) -> None:
         logging.info("Instantiated {}".format(self._type()))
         while True:
-            logging.debug("Running logic for service {}".format(self._type()))
-            self.do_service_logic()
+            logging.debug("Running logic for sensor {}".format(self._type()))
+            self.do_sensor_logic()
             if hasattr(self, "update_interval"):
                 sleep(self.update_interval)
 
@@ -23,16 +23,16 @@ class ServerMonService:
             channel.send_message(message)
 
     @abc.abstractmethod
-    def do_service_logic(self):
+    def do_sensor_logic(self):
         raise NotImplementedError(
-            "Logic for service {} was not implemented".format(self._type())
+            "Logic for sensor {} was not implemented".format(self._type())
         )
 
     def _type(self) -> str:
         return self.__class__.__name__
 
 
-class TimedService(ServerMonService):
+class TimedSensor(ServerMonSensor):
     DEFAULT_SLEEP = 60
 
     def __init__(self, channels, config) -> None:
@@ -42,7 +42,7 @@ class TimedService(ServerMonService):
             self.update_interval = None
         if self.update_interval is None:
             logging.warning(
-                "Update interval for service {} checks not specified, setting to {} seconds".format(
+                "Update interval for sensor {} checks not specified, setting to {} seconds".format(
                     self._type(), self.DEFAULT_SLEEP
                 )
             )

@@ -6,7 +6,7 @@ import importlib
 
 
 class SimpleServerMon:
-    mandatory_params = set(["messaging_channels", "services"])
+    mandatory_params = set(["messaging_channels", "sensors"])
 
     def __init__(self) -> None:
         log_level = (
@@ -36,10 +36,10 @@ class SimpleServerMon:
         for channel_definition in self.config["messaging_channels"]:
             key = next(iter(channel_definition.keys()))
             try:
-                service_module = importlib.import_module(
+                sensor_module = importlib.import_module(
                     "communication_channels.{}".format(key)
                 )
-                class_ = getattr(service_module, "{}Channel".format(key.capitalize()))
+                class_ = getattr(sensor_module, "{}Channel".format(key.capitalize()))
                 self.communication_channels.append(
                     class_(
                         next(iter(channel_definition.values())),
@@ -93,20 +93,20 @@ class SimpleServerMon:
         return "".join(x.capitalize() for x in components)
 
     def run_daemons(self) -> None:
-        for service_definition in self.config["services"]:
-            key = next(iter(service_definition.keys()))
+        for sensor_definition in self.config["sensors"]:
+            key = next(iter(sensor_definition.keys()))
             try:
-                service_module = importlib.import_module("services.{}".format(key))
+                sensor_module = importlib.import_module("sensors.{}".format(key))
                 class_ = getattr(
-                    service_module, "{}Service".format(self._snake_to_camel(key))
+                    sensor_module, "{}Sensor".format(self._snake_to_camel(key))
                 )
                 class_(
                     self.communication_channels,
-                    next(iter(service_definition.values())),
+                    next(iter(sensor_definition.values())),
                 )
             except ModuleNotFoundError as e:
                 logging.warning(
-                    "Unknown service {} found. Your config might be incorrect. Error: {}".format(
+                    "Unknown sensor {} found. Your config might be incorrect. Error: {}".format(
                         key, e
                     )
                 )

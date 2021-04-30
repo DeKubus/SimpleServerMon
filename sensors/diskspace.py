@@ -1,9 +1,9 @@
 import logging
 from psutil import disk_partitions, disk_usage
-from .base_services import TimedService
+from .base_sensors import TimedSensor
 
 
-class DiskspaceService(TimedService):
+class DiskspaceSensor(TimedSensor):
     DEFAULT_SLEEP = 10
     DEFAULT_THRESHOLD = 20
 
@@ -14,7 +14,7 @@ class DiskspaceService(TimedService):
             self.threshold = None
         if self.threshold is None:
             logging.warning(
-                "Disk space threshold not specified for service {}, setting to {}%".format(
+                "Disk space threshold not specified for sensor {}, setting to {}%".format(
                     self._type(), self.DEFAULT_THRESHOLD
                 )
             )
@@ -25,7 +25,7 @@ class DiskspaceService(TimedService):
         self.was_exceeded = []
         super().__init__(channels, config)
 
-    def do_service_logic(self) -> None:
+    def do_sensor_logic(self) -> None:
         partitions = disk_partitions()
         too_full = []
         for partition in partitions:

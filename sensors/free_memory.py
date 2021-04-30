@@ -1,9 +1,9 @@
 import logging
 from psutil import virtual_memory
-from .base_services import TimedService
+from .base_sensors import TimedSensor
 
 
-class FreeMemoryService(TimedService):
+class FreeMemorySensor(TimedSensor):
     DEFAULT_SLEEP = 10
     DEFAULT_THRESHOLD = 20
 
@@ -14,7 +14,7 @@ class FreeMemoryService(TimedService):
             self.threshold = None
         if self.threshold is None:
             logging.warning(
-                "Free memory threshold not specified for service {}, setting to {}%".format(
+                "Free memory threshold not specified for sensor {}, setting to {}%".format(
                     self._type(), self.DEFAULT_THRESHOLD
                 )
             )
@@ -22,7 +22,7 @@ class FreeMemoryService(TimedService):
         self.threshold_exceeded = False
         super().__init__(channels, config)
 
-    def do_service_logic(self) -> None:
+    def do_sensor_logic(self) -> None:
         memory_stats = virtual_memory()
         if memory_stats.percent >= self.threshold:
             if not self.threshold_exceeded:
