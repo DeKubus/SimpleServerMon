@@ -15,7 +15,7 @@ class TelegramChannel(CommunicationChannel):
             raise ValueError("Invalid Telegram chat ID provided, aborting")
         super().__init__()
 
-    def send_message(self, message) -> None:
+    def send_message(self, message, source_sensor=None) -> None:
         response = requests.post(
             f"https://api.telegram.org/bot{self.telegram_token}/sendMessage",
             params={"chat_id": self.chat_id, "text": message},

@@ -7,7 +7,7 @@ class CommunicationChannel:
         logging.info("Instantiated communication channel {}".format(self._type()[:-7]))
 
     @abc.abstractmethod
-    def send_message(self, message) -> None:
+    def send_message(self, message, source_sensor=None) -> None:
         raise NotImplementedError(
             "Logic for messaging channel {} was not implemented".format(self._type())
         )

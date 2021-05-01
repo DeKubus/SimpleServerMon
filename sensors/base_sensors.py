@@ -20,7 +20,7 @@ class ServerMonSensor:
 
     def send_message(self, message) -> None:
         for channel in self.channels:
-            channel.send_message(message)
+            channel.send_message(message, self._type())
 
     @abc.abstractmethod
     def do_sensor_logic(self):
