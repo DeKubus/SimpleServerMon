@@ -1,0 +1,45 @@
+{
+    "messaging_channels": [
+        {
+            "telegram": {
+                "chat_id": "",
+                "token": ""
+            }
+        },
+        {
+            "smtp": {
+                "server": "",
+                "port": 587,
+                "send_starttls": true,
+                "username": "",
+                "password": "",
+                "from_mail": "",
+                "to_mail": ""
+            }
+        }
+    ],
+    "sensors": [
+        {
+            "diskspace": {
+                "update_interval": 10,
+                "threshold": 90,
+                "excluded_partitions": [
+                    "/boot"
+                ]
+            }
+        },
+        {
+            "free_memory": {
+                "update_interval": 10,
+                "threshold": 90
+            }
+        },
+        {
+            "sshd_access": {
+                "log_file": "/var/log/auth.log",
+                "duration": 5,
+                "amount": 5
+            }
+        }
+    ]
+}
