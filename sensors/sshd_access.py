@@ -48,12 +48,15 @@ class SshdAccessSensor(ServerMonSensor):
                 old_date = current - timedelta(seconds=self.duration)
                 for previous_suspect_time in list(self.suspects.keys()):
                     if previous_suspect_time < old_date:
+                        logging.debug(
+                            "Removing suspect from {}".format(previous_suspect_time)
+                        )
                         self.suspects.pop(previous_suspect_time)
                 # check new messages
                 for sshd_log_message in self.LOOK_OUT_FOR:
                     found = re.findall(sshd_log_message, line)
                     if found:
-                        logging.warning(
+                        logging.info(
                             "Had a suspect that tried to log in using user {}. IP: {}".format(
                                 found[0][0], found[0][2]
                             )
@@ -65,13 +68,13 @@ class SshdAccessSensor(ServerMonSensor):
                         items.append(
                             "IP {} tried to log in as {}".format(entry[1], entry[0])
                         )
-                    self.send_message(
-                        "Had {amount} of login attempts exceeding threshold of {thr}:\n{items}".format(
-                            amount=len(self.suspects.keys()),
-                            thr=self.amount,
-                            items="\n".join(items),
-                        )
+                    message = "Had {amount} of login attempts exceeding threshold of {thr}:\n{items}".format(
+                        amount=len(self.suspects.keys()),
+                        thr=self.amount,
+                        items="\n".join(items),
                     )
+                    logging.warning(message)
+                    self.send_message(message)
                     self.suspects.clear()
                     self.sleep_until = datetime.now() + timedelta(
                         minutes=self.renotify_time

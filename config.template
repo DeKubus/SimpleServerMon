@@ -36,9 +36,11 @@
         },
         {
             "sshd_access": {
+                "update_interval": 5,
                 "log_file": "/var/log/auth.log",
-                "duration": 5,
-                "amount": 5
+                "duration": 30,
+                "amount": 5,
+                "renotify_time": 5
             }
         }
     ]
