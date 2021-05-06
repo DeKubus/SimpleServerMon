@@ -30,7 +30,15 @@ class DiskspaceSensor(TimedSensor):
         too_full = []
         for partition in partitions:
             if partition.mountpoint not in self.excluded_partitions:
-                usage = disk_usage(partition.mountpoint)
+                try:
+                    usage = disk_usage(partition.mountpoint)
+                except FileNotFoundError as e:
+                    logging.error(
+                        "An error occurred while the disk usage has been determined: {}".format(
+                            str(e)
+                        )
+                    )
+                    continue
                 percent_usage = usage.used / usage.total * 100
                 if percent_usage >= self.threshold:
                     if partition.mountpoint not in self.was_exceeded:
