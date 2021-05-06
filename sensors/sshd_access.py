@@ -68,7 +68,7 @@ class SshdAccessSensor(ServerMonSensor):
                         items.append(
                             "IP {} tried to log in as {}".format(entry[1], entry[0])
                         )
-                    message = "Had {amount} of login attempts exceeding threshold of {thr}:\n{items}".format(
+                    message = "Had {amount} of login attempts, exceeding threshold of {thr}:\n{items}".format(
                         amount=len(self.suspects.keys()),
                         thr=self.amount,
                         items="\n".join(items),
