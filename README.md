@@ -4,9 +4,10 @@ This project aims to provide a simple solution for monitoring server systems. It
 
 ## Installation
 
-The script can be executed directly by
+Before running the script, create a *config.json* using the provided template (additional details about the available config values can be found in the [configuration file](#configuration) section).
+
+Once the configuration file is created, the script can be executed directly by
 1. (Once) Installing the dependencies using `python -m pip install -r requirements.txt`
-1. (Once) Creating a *config.json* using the provided template (additional details about the available config values can be found in the [configuration file](#configuration) section)
 1. Running `python simple_server_mon.py`
 
 Alternatively, the *install.sh* script can be used on Linux to set up a new venv in the current directory and install a systemd service.
