@@ -14,7 +14,7 @@ class SmtpChannel(CommunicationChannel):
         if "port" in config and config["port"]:
             self.port = config["port"]
         else:
-            raise ValueError("Invalid port provided, aborting")
+            self.port = 587
         if "send_starttls" in config and config["send_starttls"]:
             self.starttls = config["send_starttls"]
         else:
